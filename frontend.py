@@ -20,7 +20,7 @@ else:
 
 allow_search = st.checkbox("Allow Search Capability")    
 
-URL_BACKEND = "https://agentic-chatbot-qmyd.onrender.com" # Update with your actual backend URL
+URL_BACKEND = "https://agentic-chatbot-280p.onrender.com" # Update with your actual backend URL
 query = st.text_area(placeholder="Type your query here...", label="**Enter Your Query**",height=150)
 
 button = st.button("Search")
