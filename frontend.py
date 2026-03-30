@@ -1,5 +1,5 @@
 import streamlit as st
-import requests 
+import requests
 
 st.set_page_config(
     page_title="Agentic AI Chatbot",
@@ -8,7 +8,7 @@ st.set_page_config(
 st.title("Agentic AI Chatbot")
 st.markdown("**Agentic AI Chatbot With Search Capability**")
 
-system_prompt = st.text_area(placeholder="Type your system prompt here...", label="**Define Your Agent**",height=90)
+system_prompt = st.text_area(placeholder="Type your system prompt here...", label="**Define Your Agent**", height=90)
 groq_models = ["meta-llama/llama-4-scout-17b-16e-instruct"]
 openai_models = ["openai/gpt-oss-120b"]
 model_provider = st.radio("**Select Model**", ["Groq", "OpenAI"])
@@ -18,10 +18,10 @@ if model_provider == "Groq":
 else:
     selected_model = st.selectbox("Select OpenAI Model", openai_models)
 
-allow_search = st.checkbox("Allow Search Capability")    
+allow_search = st.checkbox("Allow Search Capability")
 
-URL_BACKEND = "https://agentic-chatbot-280p.onrender.com" # Update with your actual backend URL
-query = st.text_area(placeholder="Type your query here...", label="**Enter Your Query**",height=150)
+URL_BACKEND = "https://agentic-chatbot-280p.onrender.com/chat"
+query = st.text_area(placeholder="Type your query here...", label="**Enter Your Query**", height=150)
 
 button = st.button("Search")
 
@@ -34,12 +34,24 @@ if button:
             "messages": [query],
             "search_allow": allow_search
         }
-        response = requests.post(URL_BACKEND, json=payload)
-        if response.status_code == 200:
-            st.markdown("**Response:**")
-            response_data = response.json()
-            if isinstance(response_data, dict) and "error" in response_data:
-                st.error("Error from backend: " + response_data["error"])
+        try:
+            with st.spinner("Thinking... (This may take few seconds)"):
+                response = requests.post(URL_BACKEND, json=payload, timeout=120)  # ✅ Only once
+
+            if response.status_code == 200:
+                st.markdown("**Response:**")
+                response_data = response.json()
+                if isinstance(response_data, dict) and "error" in response_data:
+                    st.error("Error from backend: " + response_data["error"])
+                else:
+                    st.subheader("Agent Response")
+                    st.write(response_data)
             else:
-                st.subheader("Agent Response")
-                st.write(response_data)
+                st.error(f"Backend error: Status {response.status_code} — {response.text}")
+
+        except requests.exceptions.Timeout:
+            st.error("Request timed out. Please try again in 30 seconds.")
+        except requests.exceptions.ConnectionError:
+            st.error("Cannot connect to backend. Please check if the API is running.")
+    else:
+        st.warning("Please enter a query first!")
