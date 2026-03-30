@@ -1,8 +1,10 @@
 from pydantic import BaseModel
 from typing import List, Optional
 from fastapi import FastAPI
+from fastapi.middleware.cors import CORSMiddleware
 from agent import get_agent_response
 import uvicorn
+import os
 
 class RequestModel(BaseModel):
     model_name: str
@@ -15,6 +17,17 @@ class RequestModel(BaseModel):
 MODEL_ALLOWED = ["meta-llama/llama-4-scout-17b-16e-instruct", "openai/gpt-oss-120b"]
 app = FastAPI(title="Agentic AI Chatbot")
 
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=["*"],
+    allow_credentials=True,
+    allow_methods=["*"],
+    allow_headers=["*"],
+)
+
+@app.get("/")
+def root():
+    return {"Status": "Welcome to the Agentic AI Chatbot API. Use the /chat endpoint to interact with the agent."}
 @app.post("/chat")
 def chat(request: RequestModel):
     if request.model_name not in MODEL_ALLOWED:
@@ -30,6 +43,8 @@ def chat(request: RequestModel):
     return response
     
 if __name__ == "__main__":
-    uvicorn.run(app, host="127.0.0.1", port=8000)
+    # uvicorn.run(app, host="127.0.0.1", port=8000)
+    port = int(os.environ.get("PORT", 8000))
+    uvicorn.run(app, host="0.0.0.0" , port=port)
 
 # uvicorn backend:app --reload

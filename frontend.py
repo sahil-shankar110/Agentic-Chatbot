@@ -20,7 +20,7 @@ else:
 
 allow_search = st.checkbox("Allow Search Capability")    
 
-URL_BACKEND = "http://127.0.0.1:8000/chat"
+URL_BACKEND = "https://your-app-name.onrender.com/chat" # Update with your actual backend URL
 query = st.text_area(placeholder="Type your query here...", label="**Enter Your Query**",height=150)
 
 button = st.button("Search")
