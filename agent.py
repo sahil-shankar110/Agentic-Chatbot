@@ -19,9 +19,9 @@ from langchain_core.messages import AIMessage
 def get_agent_response(llm_id , allow_search, system_prompt, provider, query):
 
     if provider == "groq":
-        llm = ChatGroq(model=llm_id, api_key=GROQ_API_KEY)
+        llm = ChatGroq(model=llm_id, api_key=GROQ_API_KEY , temperature=0.7 , max_tokens=2048)
     elif provider == "openai":
-        llm = ChatGroq(model=llm_id, api_key=GROQ_API_KEY)
+        llm = ChatGroq(model=llm_id, api_key=GROQ_API_KEY , temperature=0.7 , max_tokens=2048)
     else:
         raise ValueError(f"Unknown provider: {provider}")
    
