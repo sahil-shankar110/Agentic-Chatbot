@@ -9,14 +9,14 @@ st.title("Agentic AI Chatbot")
 st.markdown("**Agentic AI Chatbot With Search Capability**")
 
 system_prompt = st.text_area(placeholder="Type your system prompt here...", label="**Define Your Agent**", height=90)
-groq_models = ["llama-3.3-70b-versatile"]
-openai_models = ["openai/gpt-oss-120b"]
-model_provider = st.radio("**Select Model**", ["Groq", "OpenAI"])
+groq_models = ["groq/compound"]
+llama_models = ["llama-3.3-70b-versatile"]
+model_provider = st.radio("**Select Model**", ["Groq", "Llama"])
 
 if model_provider == "Groq":
     selected_model = st.selectbox("Select Groq Model", groq_models)
 else:
-    selected_model = st.selectbox("Select OpenAI Model", openai_models)
+    selected_model = st.selectbox("Select Llama Model", llama_models)
 
 allow_search = st.checkbox("Allow Search Capability")
 

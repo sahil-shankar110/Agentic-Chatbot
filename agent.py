@@ -19,7 +19,7 @@ def get_agent_response(llm_id , allow_search, system_prompt, provider, query):
 
     if provider == "groq":
         llm = ChatGroq(model=llm_id, api_key=GROQ_API_KEY ,temperature=0.4,max_tokens=None,max_retries=2)
-    elif provider == "openai":
+    elif provider == "llama":
         llm = ChatGroq(model=llm_id, api_key=GROQ_API_KEY , temperature=0.4,max_tokens=None,max_retries=2)
     else:
         raise ValueError(f"Unknown provider: {provider}")
