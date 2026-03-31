@@ -9,12 +9,12 @@ st.title("Agentic AI Chatbot")
 st.markdown("**Agentic AI Chatbot With Search Capability**")
 
 system_prompt = st.text_area(placeholder="Type your system prompt here...", label="**Define Your Agent**", height=90)
-groq_models = ["groq/compound"]
+openai_models = ["openai/gpt-oss-20b"]
 llama_models = ["llama-3.3-70b-versatile"]
-model_provider = st.radio("**Select Model**", ["Groq", "Llama"])
+model_provider = st.radio("**Select Model**", ["OpenAI", "Llama"])
 
-if model_provider == "Groq":
-    selected_model = st.selectbox("Select Groq Model", groq_models)
+if model_provider == "OpenAI":
+    selected_model = st.selectbox("Select OpenAI Model", openai_models)
 else:
     selected_model = st.selectbox("Select Llama Model", llama_models)
 
@@ -36,7 +36,7 @@ if button:
         }
         try:
             with st.spinner("Thinking... (This may take few seconds)"):
-                response = requests.post(URL_BACKEND, json=payload, timeout=120)  # ✅ Only once
+                response = requests.post(URL_BACKEND, json=payload, timeout=120)  
 
             if response.status_code == 200:
                 st.markdown("**Response:**")

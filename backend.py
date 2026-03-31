@@ -14,7 +14,7 @@ class RequestModel(BaseModel):
     search_allow: bool 
 
 
-MODEL_ALLOWED = ["groq/compound","llama-3.3-70b-versatile"]
+MODEL_ALLOWED = ["openai/gpt-oss-20b","llama-3.3-70b-versatile"]
 app = FastAPI(title="Agentic AI Chatbot")
 
 app.add_middleware(
