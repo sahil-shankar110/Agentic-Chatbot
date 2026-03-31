@@ -30,8 +30,9 @@ def get_agent_response(llm_id , allow_search, system_prompt, provider, query):
         tools=tools,
         system_prompt=system_prompt
     )
-    state = {"messages" : query}
+    messages = [{"role": "user", "content": msg} for msg in query]
+    state = {"messages" : messages}
     response = agent.invoke(state)
-    messages = response.get("messages")
-    ai_message = [message.content for message in messages if isinstance(message, AIMessage)]
+    all_messages = response.get("messages" , [])
+    ai_message = [message.content for message in all_messages if isinstance(message, AIMessage)]
     return ai_message[-1] if ai_message else "No response from agent"
