@@ -9,12 +9,12 @@ st.title("Agentic AI Chatbot")
 st.markdown("**Agentic AI Chatbot With Search Capability**")
 
 system_prompt = st.text_area(placeholder="Type your system prompt here...", label="**Define Your Agent**", height=90)
-openai_models = ["openai/gpt-oss-20b"]
+gemini_models = ["gemini-2.5-flash-lite"]
 llama_models = ["llama-3.3-70b-versatile"]
-model_provider = st.radio("**Select Model**", ["OpenAI", "Llama"])
+model_provider = st.radio("**Select Model**", ["Gemini", "Llama"])
 
-if model_provider == "OpenAI":
-    selected_model = st.selectbox("Select OpenAI Model", openai_models)
+if model_provider == "Gemini":
+    selected_model = st.selectbox("Select Gemini Model", gemini_models)
 else:
     selected_model = st.selectbox("Select Llama Model", llama_models)
 
